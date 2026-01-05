@@ -6,17 +6,27 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Button, Text, View } from 'react-native';
 import { auth } from '../config/firebase';
 
-// Import Screens
 import LoginScreen from '../screens/LoginScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import SignupScreen from '../screens/SignupScreen';
 import { logoutUser } from '../services/auth';
 
-// Temporary Home Screen (Just to prove login worked)
-function HomeScreen() {
+// ---------------------------------------------------------
+// CHECKPOINT: If you don't see the purple button, this code isn't running.
+// ---------------------------------------------------------
+function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={{ fontSize: 24, marginBottom: 20 }}>🐦 Welcome to Birdy!</Text>
-      <Text style={{ marginBottom: 20, color: 'gray' }}>You are logged in.</Text>
+      
+      {/* PURPLE BUTTON */}
+      <Button 
+        title="Edit Profile" 
+        onPress={() => navigation.navigate('Profile')} 
+        color="#6200ea" 
+      />
+      
+      <View style={{ height: 20 }} /> 
       <Button title="Log Out" onPress={logoutUser} color="#FF5733" />
     </View>
   );
@@ -29,7 +39,6 @@ export default function AppNavigator() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // This listener automatically detects if a user logs in or out
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
       setLoading(false);
@@ -37,22 +46,17 @@ export default function AppNavigator() {
     return unsubscribe;
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#FF5733" />
-      </View>
-    );
-  }
+  if (loading) return <ActivityIndicator size="large" />;
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          // IF LOGGED IN: Show Home
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} /> 
+          </>
         ) : (
-          // IF LOGGED OUT: Show Auth Screens
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
