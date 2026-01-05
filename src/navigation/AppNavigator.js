@@ -3,34 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Button, Text, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { auth } from '../config/firebase';
 
+import HomeScreen from '../screens/HomeScreen'; // <--- IMPORT THE NEW SCREEN
 import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SignupScreen from '../screens/SignupScreen';
-import { logoutUser } from '../services/auth';
-
-// ---------------------------------------------------------
-// CHECKPOINT: If you don't see the purple button, this code isn't running.
-// ---------------------------------------------------------
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>🐦 Welcome to Birdy!</Text>
-      
-      {/* PURPLE BUTTON */}
-      <Button 
-        title="Edit Profile" 
-        onPress={() => navigation.navigate('Profile')} 
-        color="#6200ea" 
-      />
-      
-      <View style={{ height: 20 }} /> 
-      <Button title="Log Out" onPress={logoutUser} color="#FF5733" />
-    </View>
-  );
-}
 
 const Stack = createNativeStackNavigator();
 
