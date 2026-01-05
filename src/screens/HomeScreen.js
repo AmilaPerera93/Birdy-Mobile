@@ -54,9 +54,14 @@ export default function HomeScreen({ navigation }) {
       {/* HEADER */}
       <View style={styles.header}>
         <Text style={styles.logo}>Birdy.</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Text style={styles.profileLink}>👤 Profile</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', gap: 15}}>
+           <TouchableOpacity onPress={() => navigation.navigate('Matches')}>
+              <Text style={{fontSize: 24}}>💬</Text> 
+           </TouchableOpacity>
+           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+              <Text style={styles.profileLink}>👤</Text>
+           </TouchableOpacity>
+        </View>
       </View>
 
       {/* DEV TOOLS */}

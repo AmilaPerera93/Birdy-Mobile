@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { auth } from '../config/firebase';
 
-import HomeScreen from '../screens/HomeScreen'; // <--- IMPORT THE NEW SCREEN
+import ChatScreen from '../screens/ChatScreen'; // NEW
+import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import MatchesListScreen from '../screens/MatchesListScreen'; // NEW
 import ProfileScreen from '../screens/ProfileScreen';
 import SignupScreen from '../screens/SignupScreen';
 
@@ -33,7 +35,10 @@ export default function AppNavigator() {
         {user ? (
           <>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen} /> 
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            {/* NEW SCREENS */}
+            <Stack.Screen name="Matches" component={MatchesListScreen} options={{ headerShown: true, title: 'Messages' }}/> 
+            <Stack.Screen name="Chat" component={ChatScreen} options={{ headerShown: true, title: 'Chat' }}/>
           </>
         ) : (
           <>

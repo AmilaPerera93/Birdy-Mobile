@@ -1,8 +1,9 @@
 // src/config/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+// We import 'initializeAuth' instead of 'getAuth' to configure storage
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { getReactNativePersistence, initializeAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDQEawZNfMP8XHYWOBHdtYxtJH15m9o4qY",
@@ -12,12 +13,16 @@ const firebaseConfig = {
   messagingSenderId: "415264984242",
   appId: "1:415264984242:web:82926ae967e84869210dab"
 };
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Services
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+// Initialize Auth with Persistence
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
 
-console.log("Birdy Firebase Connected Successfully!");
+const db = getFirestore(app);
+
+console.log("🔥 Birdy Firebase Connected Successfully!");
+
+export { auth, db };
+
